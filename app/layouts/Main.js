@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Helmet from "react-helmet";
 
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga";
 
-import Header from '../components/Template/Header';
-import Nav from '../components/Template/Nav';
+import Header from "../components/Template/Header";
+import Nav from "../components/Template/Nav";
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   ReactGA.initialize(process.env.GA_ID);
 }
 
@@ -17,9 +17,9 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       ReactGA.set({
-        page: window.location.pathname,
+        page: window.location.pathname
       });
       ReactGA.pageview(window.location.pathname);
     }
@@ -28,27 +28,29 @@ class Main extends Component {
   render() {
     return (
       <div id="wrapper">
-        <Helmet titleTemplate="%s | Michael D'Angelo" defaultTitle="Michael D'Angelo" />
+        <Helmet
+          titleTemplate="%s | Kale-ab Tessera"
+          defaultTitle=" Kale-ab Tessera"
+        />
         <Header />
-        <div id="main">
-          {this.props.children}
-        </div>
+        <div id="main">{this.props.children}</div>
         {this.props.fullPage ? null : <Nav />}
-      </div>);
+      </div>
+    );
   }
 }
 
 Main.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
+    PropTypes.node
   ]),
-  fullPage: PropTypes.bool,
+  fullPage: PropTypes.bool
 };
 
 Main.defaultProps = {
   children: null,
-  fullPage: false,
+  fullPage: false
 };
 
 export default Main;
