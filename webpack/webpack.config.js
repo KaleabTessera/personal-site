@@ -1,62 +1,74 @@
-import 'dotenv/config';
-import path from 'path';
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
+import "dotenv/config";
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ScriptExtHtmlWebpackPlugin from "script-ext-html-webpack-plugin";
 
 export default {
-  devtool: 'eval-source-map',
-  mode: 'development',
+  devtool: "eval-source-map",
+  mode: "development",
   entry: [
-    'webpack-hot-middleware/client?path=//localhost:7999/__webpack_hmr&reload=true',
-    path.join(__dirname, '../app/entry.js'),
+    "webpack-hot-middleware/client?path=//localhost:7999/__webpack_hmr&reload=true",
+    path.join(__dirname, "../app/entry.js")
   ],
   output: {
-    path: path.join(__dirname, '../dist/'),
-    filename: '[name].js',
-    publicPath: '/',
+    path: path.join(__dirname, "../dist/"),
+    filename: "[name].js",
+    publicPath: "/"
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'server/views/index.tpl.html',
-      inject: 'body',
-      filename: 'index.html',
+      template: "server/views/index.tpl.html",
+      inject: "body",
+      filename: "index.html"
     }),
     new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async',
+      defaultAttribute: "async"
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     rules: [
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader"
       },
       {
         test: /\.md$/,
-        use: [{
-          loader: 'raw-loader',
-        }],
-      }, {
+        use: [
+          {
+            loader: "raw-loader"
+          }
+        ]
+      },
+      {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
-      }, {
+        loader:
+          "style-loader!css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]"
+      },
+      {
         test: /\.scss$/,
-        loaders: 'style-loader!css-loader!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
-      }, {
+        loaders:
+          "style-loader!css-loader!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]"
+      },
+      {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: 'application/font-woff',
-        },
-      }, {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader',
+          mimetype: "application/font-woff"
+        }
       },
-    ],
-  },
+      // {
+      //   test: /\.(ttf|eot|svg|jpg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: "file-loader"
+      // }
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"]
+      }
+    ]
+  }
 };
